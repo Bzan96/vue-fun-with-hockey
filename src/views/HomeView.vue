@@ -1,15 +1,5 @@
-<script setup lang="ts">
-import HockeyTeams from '../components/HockeyTeams.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
-
-  <Suspense>
-    <HockeyTeams />
-
-    <template #fallback> Loading... </template>
-  </Suspense>
+  <main></main>
 </template>

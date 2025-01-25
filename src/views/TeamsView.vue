@@ -3,11 +3,9 @@ import HockeyTeams from '../components/HockeyTeams.vue'
 </script>
 
 <template>
-  <main>
-    <Suspense>
-      <HockeyTeams />
+  <Suspense>
+    <HockeyTeams />
 
-      <template #fallback> Loading... </template>
-    </Suspense>
-  </main>
+    <template #fallback> Loading... </template>
+  </Suspense>
 </template>

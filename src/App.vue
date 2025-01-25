@@ -12,7 +12,9 @@ import { RouterLink, RouterView } from 'vue-router'
     </nav>
   </header>
 
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>
