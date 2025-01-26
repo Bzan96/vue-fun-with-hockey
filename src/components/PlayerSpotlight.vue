@@ -32,8 +32,8 @@ const playersInSpotlight = await fetchPlayersInSpotlight()
 
 <template v-if="playersInSpotlight != null">
   <h2>Spotlight</h2>
-  <ul v-for="player in playersInSpotlight" :key="player.playerId">
-    <li>
+  <ul>
+    <li v-for="player in playersInSpotlight" :key="player.playerId">
       <img :src="player.teamLogo" :alt="player.teamTriCode" class="team-logo" />
       <figure>
         <img :src="player.headshot" :alt="player.name.default" />
@@ -50,6 +50,11 @@ h2 {
 
 ul {
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 0;
 
   li {
     position: relative;
@@ -62,14 +67,29 @@ ul {
       transform: translateY(-50%);
       max-width: 60px;
     }
+
+    @media (min-width: 769px) {
+      width: 45%;
+    }
+    @media (min-width: 1440px) {
+      width: 30%;
+    }
   }
 
   figure {
     max-width: fit-content;
+    text-align: center;
 
     img {
       border-radius: 999px;
       box-shadow: 0 0 8px 8px #ededed;
+      background-color: #ededed;
+      max-width: calc(100% - 32px);
+      cursor: pointer;
+
+      &:hover {
+        mix-blend-mode: difference;
+      }
     }
 
     figcaption {

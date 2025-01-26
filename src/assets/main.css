@@ -6,6 +6,12 @@
   font-weight: normal;
 }
 
+:root {
+  --primary: #3c6bc3;
+  --secondary: #c33c6b;
+  --tertiary: #6bc33c;
+}
+
 body {
   min-height: 100vh;
   line-height: 1.5;
@@ -25,6 +31,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f5deb3;
 }
 
 #app {
@@ -34,4 +41,47 @@ body {
 
 main {
   grid-column: 2;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+header {
+  margin-left: 15%;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  align-items: center;
+}
+
+header nav {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+header nav a {
+  position: relative;
+  font-size: 20px;
+  text-decoration: none;
+  height: fit-content;
+}
+
+header nav a::after {
+  content: '';
+  width: 100%;
+  height: 0px;
+  background-color: var(--tertiary);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+header nav a:hover::after {
+  height: 3px;
 }
