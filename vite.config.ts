@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 const BASE_URL = 'https://api.nhle.com'
-const BASE_WEB_URL = 'https://api.nhle.com'
+const BASE_WEB_URL = 'https://api-web.nhle.com'
 const LOCALE = 'en'
 
 const proxyOptions = {
@@ -30,8 +30,7 @@ export default defineConfig({
         ...proxyOptions,
       },
       '/api/player-spotlight': {
-        // target: `${BASE_WEB_URL}/v1/player-spotlight`,
-        target: `https://api-web.nhle.com/v1/player-spotlight`,
+        target: `${BASE_WEB_URL}/v1/player-spotlight`,
         ...proxyOptions,
       },
     },
