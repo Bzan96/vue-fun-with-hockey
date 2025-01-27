@@ -1,50 +1,39 @@
 <script setup lang="ts">
-type Team = {
+type Player = {
   id: number
-  franchiseId: number
+  firstName: string
+  lastName: string
   fullName: string
-  leagueId: number
-  rawTricode: string
-  tricode: string
+  currentTeamId: number | null
+  positionCode: string
+  sweaterNumber: number | null
 }
 
-const fetchTeams = async () => {
+const fetchPlayers = async () => {
   try {
-    const response = await fetch('/api/teams')
-    const { data } = (await response.json()) as { data: Team[] }
+    const response = await fetch('/api/players')
+    const { data } = (await response.json()) as { data: Player[] }
 
     return data
-      .filter((entry: Team) => entry.franchiseId != null)
-      .sort((prev, next) => (prev.fullName > next.fullName ? 0 : -1))
   } catch (error) {
     console.error('Oh no, anyway...', { cause: error })
   }
 }
 
-const teams = await fetchTeams()
-const teamsByLetter = (teams ?? []).reduce<Record<string, Team[]>>((acc, team) => {
-  const startingLetter = team.fullName[0]
-
-  if (acc[startingLetter] == null) {
-    acc[startingLetter] = [team]
-  } else {
-    acc[startingLetter].push(team)
-  }
-
-  return acc
-}, {})
+const players = await fetchPlayers()
 </script>
 
 <template>
-  <h1>Teams</h1>
-  <div class="columns">
+  <h1>Players</h1>
+  <div>{{ players }}</div>
+  <!-- <div class="columns">
     <section v-for="letter in Object.keys(teamsByLetter)" :key="letter" :aria-labelledby="letter">
       <ul>
         <h2 :id="letter">{{ letter }}</h2>
         <li v-for="team in teamsByLetter[letter]" :key="team.id">{{ team.fullName }}</li>
       </ul>
     </section>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>

@@ -19,7 +19,6 @@ const fetchPlayersInSpotlight = async () => {
   try {
     const response = await fetch('/api/player-spotlight')
     const data = (await response.json()) as Spotlight[]
-    console.log(response, data)
 
     return data
   } catch (error) {
@@ -34,11 +33,13 @@ const playersInSpotlight = await fetchPlayersInSpotlight()
   <h2>Spotlight</h2>
   <ul>
     <li v-for="player in playersInSpotlight" :key="player.playerId">
-      <img :src="player.teamLogo" :alt="player.teamTriCode" class="team-logo" />
-      <figure>
-        <img :src="player.headshot" :alt="player.name.default" />
-        <figcaption>{{ player.name.default }}</figcaption>
-      </figure>
+      <a :href="`/player/${player.playerId}`">
+        <img :src="player.teamLogo" :alt="player.teamTriCode" class="team-logo" />
+        <figure>
+          <img :src="player.headshot" :alt="player.name.default" />
+          <figcaption>{{ player.name.default }}</figcaption>
+        </figure>
+      </a>
     </li>
   </ul>
 </template>
@@ -46,6 +47,7 @@ const playersInSpotlight = await fetchPlayersInSpotlight()
 <style scoped lang="scss">
 h2 {
   margin: 30px auto;
+  color: var(--secondary);
 }
 
 ul {
@@ -89,6 +91,7 @@ ul {
 
       &:hover {
         mix-blend-mode: difference;
+        background-color: transparent;
       }
     }
 

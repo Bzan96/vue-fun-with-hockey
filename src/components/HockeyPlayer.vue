@@ -1,50 +1,50 @@
 <script setup lang="ts">
-type Team = {
+import { useRoute } from 'vue-router'
+
+type Player = {
   id: number
-  franchiseId: number
-  fullName: string
-  leagueId: number
-  rawTricode: string
-  tricode: string
+  firstName: {
+    default: string
+  }
+  lastName: {
+    default: string
+  }
+  currentTeamId: number | null
+  position: string
+  sweaterNumber: number | null
 }
 
-const fetchTeams = async () => {
-  try {
-    const response = await fetch('/api/teams')
-    const { data } = (await response.json()) as { data: Team[] }
+const fetchPlayer = async () => {
+  const { path } = useRoute()
 
-    return data
-      .filter((entry: Team) => entry.franchiseId != null)
-      .sort((prev, next) => (prev.fullName > next.fullName ? 0 : -1))
+  try {
+    const probablePlayerId = path.substring(path.length - 7)
+
+    if (!isNaN(parseInt(probablePlayerId, 10))) {
+      const response = await fetch(`/api/player?player_id=${probablePlayerId}`)
+      const data = (await response.json()) as Player
+
+      return data
+    }
   } catch (error) {
     console.error('Oh no, anyway...', { cause: error })
   }
 }
 
-const teams = await fetchTeams()
-const teamsByLetter = (teams ?? []).reduce<Record<string, Team[]>>((acc, team) => {
-  const startingLetter = team.fullName[0]
-
-  if (acc[startingLetter] == null) {
-    acc[startingLetter] = [team]
-  } else {
-    acc[startingLetter].push(team)
-  }
-
-  return acc
-}, {})
+const player = await fetchPlayer()
 </script>
 
-<template>
-  <h1>Teams</h1>
-  <div class="columns">
+<template v-if="player != null">
+  <h1>{{ player?.firstName.default }} {{ player?.lastName.default }}</h1>
+  <div>{{ player }}</div>
+  <!-- <div class="columns">
     <section v-for="letter in Object.keys(teamsByLetter)" :key="letter" :aria-labelledby="letter">
       <ul>
         <h2 :id="letter">{{ letter }}</h2>
         <li v-for="team in teamsByLetter[letter]" :key="team.id">{{ team.fullName }}</li>
       </ul>
     </section>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>

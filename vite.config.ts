@@ -29,9 +29,22 @@ export default defineConfig({
         target: `${BASE_URL}/stats/rest/${LOCALE}/team`,
         ...proxyOptions,
       },
+      '/api/players': {
+        target: `${BASE_URL}/stats/rest/${LOCALE}/players`,
+        ...proxyOptions,
+      },
       '/api/player-spotlight': {
         target: `${BASE_WEB_URL}/v1/player-spotlight`,
         ...proxyOptions,
+      },
+      '/api/player': {
+        target: `${BASE_WEB_URL}/v1/player`,
+        ...proxyOptions,
+        rewrite: (path) => {
+          const playerId = path.substring(path.length - 7)
+
+          return `/${playerId}/landing`
+        },
       },
     },
   },
