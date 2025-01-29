@@ -8,10 +8,15 @@ type Team = {
   tricode: string
 }
 
+type Response = {
+  data: Team[]
+  total: number
+}
+
 const fetchTeams = async () => {
   try {
     const response = await fetch('/api/teams')
-    const { data } = (await response.json()) as { data: Team[] }
+    const { data } = (await response.json()) as Response
 
     return data
       .filter((entry: Team) => entry.franchiseId != null)

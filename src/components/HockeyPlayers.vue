@@ -9,10 +9,15 @@ type Player = {
   sweaterNumber: number | null
 }
 
+type Response = {
+  data: Player[]
+  total: number
+}
+
 const fetchPlayers = async () => {
   try {
     const response = await fetch('/api/players')
-    const { data } = (await response.json()) as { data: Player[] }
+    const { data } = (await response.json()) as Response
 
     return data
   } catch (error) {
